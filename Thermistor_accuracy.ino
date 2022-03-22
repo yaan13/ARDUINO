@@ -26,12 +26,6 @@ void Thermistor(int16_t ADCvalue)
   int16_t B  = 3950;
   int16_t Pullup = 9930; // 10K ohm
   
-  // R / (Pullup + R)   = adc / 4096
-  R = (Pullup * ADCvalue) / (4096 - ADCvalue);
-  
-  // B = (log(R) - log(R0)) / (1/T - 1/T0) 
-  T = 1 / (1/T0 + (log(R)-log(R0)) / B );
-  Temp = T - 273.15;  
 
   V = ReadVoltage(A0); // ADC accuracy improved for ESP32
   R = 9990 * V / (5 - V); // assuming 9990 is the measured resistance of 10K resistor by a multi-meter.
