@@ -21,8 +21,8 @@ Adafruit_HTU21DF htu = Adafruit_HTU21DF();
 
 // Adafruit IO Account Configuration
 // (to obtain these values, visit https://io.adafruit.com and click on Active Key)
-#define AIO_USERNAME "chungchachi"
-#define AIO_KEY      "aio_kVqx63oxqhDGH9qAcaZWxzmF26vP"
+#define AIO_USERNAME "yan513"
+#define AIO_KEY      "aio_dPRU56ciCy9Ya3jNWn8Siqv1EYYF"
 
 /************ Global State (you don't need to change this!) ******************/
 
