@@ -126,5 +126,5 @@ if (abs(kalAngleY) > 90)
     bleMouse.click(MOUSE_RIGHT);
     delay(100);
   }
-  delay(100);
+  delay(50);
 }
