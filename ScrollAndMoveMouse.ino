@@ -41,7 +41,7 @@ void setup() {
 
   imu.getAcceleration(&accX, &accY, &accZ);
   
- #ifdef RESTRICT_PITCH // Eq. 25 and 26
+#ifdef RESTRICT_PITCH // Eq. 25 and 26
   double roll  = atan2(accY, accZ) * RAD_TO_DEG;
   double pitch = atan(-accX / sqrt(accY * accY + accZ * accZ)) * RAD_TO_DEG;
 #else // Eq. 28 and 29
@@ -67,10 +67,10 @@ void loop() {
   double dt = (double)(micros() - timer) / 1000000; // Calculate delta time
   timer = micros();
 
-#ifdef RESTRICT_PITCH // Eq. 25 and 26
+#ifdef RESTRICT_PITCH 
   double roll  = atan2(accY, accZ) * RAD_TO_DEG;
   double pitch = atan(-accX / sqrt(accY * accY + accZ * accZ)) * RAD_TO_DEG;
-#else // Eq. 28 and 29
+#else 
   double roll  = atan(accY / sqrt(accX * accX + accZ * accZ)) * RAD_TO_DEG;
   double pitch = atan2(-accX, accZ) * RAD_TO_DEG;
 #endif
@@ -106,14 +106,16 @@ if (abs(kalAngleY) > 90)
 #endif
 
   compAngleX = 0.93 * (compAngleX + gyroXrate * dt) + 0.07 * roll; // Calculate the angle using a Complimentary filter
-  compAngleY = 0.93 * (compAngleY + gyroYrate * dt) + 0.07 * pitch;
+  compAngleY = 0.9 * (compAngleY + gyroYrate * dt) + 0.1 * pitch; //運用濾剝算角度
 
   if (gyroXangle < -180 || gyroXangle > 180)
     gyroXangle = kalAngleX;
   if (gyroYangle < -180 || gyroYangle > 180)
     gyroYangle = kalAngleY;
-  
-  bleMouse.move(compAngleX , compAngleY );
+    
+  compAngleX=(gyroX+370)/200 ; //移除在平衡時的誤差
+  compAngleY=-(gyroY-65)/200 ; //移除在平衡時的誤差
+  bleMouse.move(compAngleX , compAngleY ); //運用兩數值做移動
     
   buttonLstate = digitalRead(buttonL);
   buttonRstate = digitalRead(buttonR);  
@@ -126,5 +128,13 @@ if (abs(kalAngleY) > 90)
     bleMouse.click(MOUSE_RIGHT);
     delay(100);
   }
-  delay(50);
+  delay(10);//延遲10間改為10毫秒，使滑鼠接收訊號頻率更高，較不會卡卡的
+   Serial.print(gyroX); Serial.print("\t");
+  
+
+  Serial.print("\t");
+
+  
+  Serial.print(gyroY); Serial.println();
+  
 }
